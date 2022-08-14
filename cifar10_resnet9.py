@@ -36,7 +36,6 @@ batch_size = 128
 train_dl = DataLoader(train_ds, batch_size, shuffle=True, num_workers=2, pin_memory=True)
 val_dl = DataLoader(val_ds, batch_size, num_workers=2, pin_memory=True)
 
-from torch.utils import data
 def get_default_device():
   if torch.cuda.is_available():
     return torch.device('cuda')
@@ -188,12 +187,11 @@ grad_clip = 0.1
 weight_decay = 0.0001
 opt_func = torch.optim.Adam
 
-# Commented out IPython magic to ensure Python compatibility.
-# %%time
-# history = [evaluate(model, val_dl)]
-# history += fit_one_cycle(epochs, max_lr, model, train_dl, val_dl
-#                          , grad_clip=grad_clip, weight_decay=weight_decay, 
-#                          opt_func=opt_func)
+
+history = [evaluate(model, val_dl)]
+history += fit_one_cycle(epochs, max_lr, model, train_dl, val_dl
+                         , grad_clip=grad_clip, weight_decay=weight_decay, 
+                         opt_func=opt_func)
 
 torch.save(model.state_dict(), 'CIFAR10_ResNet9.pth')
 
